@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Etch-a-Sketch</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-rows: repeat(16, 1fr);
+            grid-template-columns: repeat(16, 1fr);
+
+            height: 400px;
+            width: 400px;
+            margin: 25px auto;
+        }
+
+        .grid-item {
+            background-color: black;
+        }
+
+        .colored-item {
+            background-color: white;
+        }
+
+        .button-area {
+            display: box;
+        }
+        #clear {
+            
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="button-area">
+        <button type="button" id="clear">Clear Grid</button>
+    </div>
+
+    <div class="grid-container">
+
+    </div>
+
+    <script>
+        const gridContainer = document.querySelector('.grid-container');
+        const clearButton = document.querySelector('#clear');
+
+        function generateGrid() {
+            for (i = 0; i < 256; i++) {
+                let newGridItem = document.createElement('div');
+                newGridItem.setAttribute('class', 'grid-item');
+                newGridItem.addEventListener('mouseover', function () { changeColor(newGridItem); });
+                gridContainer.appendChild(newGridItem);
+            }
+        }
+
+        function changeColor(gridItem) {
+            gridItem.setAttribute('class', 'colored-item');
+        }
+
+        generateGrid();
+    </script>
+</body>
+
+</html>
