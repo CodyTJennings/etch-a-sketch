@@ -6,6 +6,9 @@
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style>
+        html {
+            background-color: #B98077;
+        }
         .grid-container {
             display: grid;
             grid-template-rows: repeat(16, 1fr);
@@ -25,13 +28,18 @@
         }
 
         .button-area {
-            display: box;
+            display: flex;
+
         }
+
         #clear {
-            
-
+            margin: auto;
+            color: blue;
+            background-color: #EBE8E2;
+            block-size: 30px;
+            font-size: 16px;
+            border-radius: 10px;
         }
-
     </style>
 </head>
 
@@ -48,10 +56,30 @@
         const gridContainer = document.querySelector('.grid-container');
         const clearButton = document.querySelector('#clear');
 
-        function generateGrid() {
-            for (i = 0; i < 256; i++) {
+        clearButton.addEventListener('click', function () { generateGrid(getGridSize())});
+
+        function generateGrid(gridSize) {
+
+            /* set default value of gridSize */
+            if (gridSize <= 0 || gridSize > 150 || isNaN(gridSize)) {
+                gridSize = 16;
+                
+            }
+
+            /* remove previous grid */
+            while (gridContainer.firstChild) {
+                gridContainer.removeChild(gridContainer.firstChild);
+            }
+
+            /* set the grid-template-rows and grid-template-columns attribute of the grid-container class */
+            gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+            gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+
+            /* generate the grid of black squares */
+            for (i = 0; i < (gridSize * gridSize); i++) {
                 let newGridItem = document.createElement('div');
                 newGridItem.setAttribute('class', 'grid-item');
+                /* add an EventListener on mouseover to call changeColor on the grid item */
                 newGridItem.addEventListener('mouseover', function () { changeColor(newGridItem); });
                 gridContainer.appendChild(newGridItem);
             }
@@ -59,6 +87,11 @@
 
         function changeColor(gridItem) {
             gridItem.setAttribute('class', 'colored-item');
+        }
+
+        function getGridSize() {
+            let gridSize = Number(prompt('Enter the desired length of one side of the grid square (between 1 and 150'));
+            return gridSize;
         }
 
         generateGrid();
